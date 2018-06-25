@@ -1,0 +1,17 @@
+{
+  "name": "cs-546-lab-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Matthew Brand 10410988",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "mongodb": "^3.0.10",
+    "uuid": "^3.2.1"
+  }
+}
