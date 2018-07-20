@@ -1,0 +1,45 @@
+html,
+body {
+  font-size: 14pt;
+}
+
+body {
+  background: #dedede;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+main {
+  max-width: 75%;
+  margin: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222;
+  margin-bottom: 5px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 2;
+}
+
+form {
+  background: #d3d3d3;
+}
+
+.success {
+  color: #28a745;
+}
+
+.failure {
+  color: #dc3545;
+}
