@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const app = express();
 const configRoutes = require("./routes");
 
+const staticViews = express.static(`${__dirname}/public`);
+
+app.use("/public", staticViews);
 app.use(bodyParser.json());
 configRoutes(app);
 
