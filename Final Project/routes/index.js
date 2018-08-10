@@ -3,6 +3,8 @@ const usersRoutes = require("./users");
 const eventsRoutes = require("./events");
 
 const constructorMethod = app => {
+  // Middleware
+
   app.use("/users", usersRoutes);
   app.use("/events", eventsRoutes);
 
