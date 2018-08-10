@@ -1,0 +1,15 @@
+{
+  "name": "cs-546-lab-9",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Matthew Brand 10410988",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
