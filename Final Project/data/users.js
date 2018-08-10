@@ -1,73 +1,70 @@
+const uuidv1 = require("uuid/v1");
 const mongoCollections = require("../config/mongoCollections");
-const users = mongoCollections.users;
-const uuidv1 = require('uuid/v1');
 
-let exportedMethods = {
+const { users } = mongoCollections;
+
+const exportedMethods = {
   getAllUsers() {
     return users().then(usersCollection => {
-      try{
+      try {
         return usersCollection.find({}).toArray();
       } catch (e) {
-        throw "Error finding any users"
+        throw new Error("Error finding any users");
       }
     });
   },
 
   getUserById(id) {
-    return users().then(usersCollection => {
-      return usersCollection.findOne({ _id: id }).then(user => {
-        if (!user) throw "User not found";
+    return users().then(usersCollection =>
+      usersCollection.findOne({ _id: id }).then(user => {
+        if (!user) throw new Error("User not found");
         return user;
-      });
-    });
+      })
+    );
   },
 
   getUserByCredentials(username, password) {
-    return users().then(usersCollection => {
-        return usersCollection.findOne({ username: username, password: password }).then(user => {
-          if (!user) throw "User not found";
-          return user;
-        });
-      });
+    return users().then(usersCollection =>
+      usersCollection.findOne({ username, password }).then(user => {
+        if (!user) throw new Error("User not found");
+        return user;
+      })
+    );
   },
 
   addUser(username, password, emailAddress) {
-    if(!username || !password || !emailAddress) {
-      throw "You must supply all parts of the account"
+    if (!username || !password || !emailAddress) {
+      throw new Error("You must supply all parts of the account");
     }
     return users().then(usersCollection => {
-      let newUser = {
+      const newUser = {
         _id: uuidv1(),
         _sessionid: null,
-        username: username,
-        password: password,
-        emailAddress: emailAddress,
+        username,
+        password,
+        emailAddress,
         emailAddress_verified: false
       };
 
       return usersCollection
         .insertOne(newUser)
-        .then(newInsertInformation => {
-          return newInsertInformation.insertedId;
-        })
-        .then(newId => {
-          return this.getRecipeById(newId);
-        });
+        .then(newInsertInformation => newInsertInformation.insertedId)
+        .then(newId => this.getRecipeById(newId));
     });
   },
 
   removeUser(id) {
-    if(!id) {
-      throw "You must supply an ID"
+    if (!id) {
+      throw new Error("You must supply an ID");
     }
-    return users().then(usersCollection => {
-      return usersCollection.removeOne({ _id: id }).then(deletionInfo => {
+    return users().then(usersCollection =>
+      usersCollection.removeOne({ _id: id }).then(deletionInfo => {
         if (deletionInfo.deletedCount === 0) {
-          throw `Could not delete recipe with id of ${id}`;
+          throw new Error(`Could not delete recipe with id of ${id}`);
         }
-      });
-    });
-  },
+      })
+    );
+  }
 };
 
 module.exports = exportedMethods;

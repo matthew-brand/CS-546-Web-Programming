@@ -3,15 +3,15 @@ const dbConnection = require("./mongoConnection");
 /* This will allow you to have one reference to each collection per app */
 /* Feel free to copy and paste this this */
 const getCollectionFn = collection => {
-  let _col = undefined;
+  let col;
 
   return async () => {
-    if (!_col) {
+    if (!col) {
       const db = await dbConnection();
-      _col = await db.collection(collection);
+      col = await db.collection(collection);
     }
 
-    return _col;
+    return col;
   };
 };
 
