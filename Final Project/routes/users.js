@@ -6,15 +6,20 @@ const data = require("../data");
 
 const usersData = data.users;
 
-router.get("/:id", async (req, res) => {
+// Verifies correct password
+router.get("/:id/:password", async (req, res) => {
   if (!req.params.id) {
-    res.status(400).json({ message: "You must supply an ID" });
+    res.status(400).json({ message: "You must supply id" });
+  } else if (!req.params.password) {
+    res.status(400).json({ message: "You must supply password" });
   } else {
+    const { id } = req.params;
+    const { password } = req.params;
     try {
-      const user = await usersData.getUserById(req.params.id);
-      res.json(user);
+      const verified = await usersData.verifyPassword(id, password);
+      res.json(verified);
     } catch (e) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: e });
     }
   }
 });
@@ -28,10 +33,32 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    if (!req.params.id) {
+      res.status(400).json({ message: "You must supply id" });
+    } else {
+      const user = await usersData.getUserById(req.params.id);
+      res.json(user);
+    }
+  } catch (e) {
+    res.status(500).send("No user exists with that id");
+  }
+});
+
 router.post("/", async (req, res) => {
-  if (!req.body.username || !req.body.password || !req.body.emailAddress) {
+  if (!req.body.username) {
     res.status(400).json({
-      message: "You must supply a full account, you are missing parts"
+      message: "You must supply a full account, you are missing the username"
+    });
+  } else if (!req.body.password) {
+    res.status(400).json({
+      message: "You must supply a full account, you are missing the password"
+    });
+  } else if (!req.body.emailAddress) {
+    res.status(400).json({
+      message:
+        "You must supply a full account, you are missing the email address"
     });
   } else {
     const freshUser = req.body;

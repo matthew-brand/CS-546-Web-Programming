@@ -1,6 +1,9 @@
 const uuidv1 = require("uuid/v1");
+const bcrypt = require("bcrypt");
+
 const mongoCollections = require("../config/mongoCollections");
 
+const saltRounds = 16;
 const { users } = mongoCollections;
 
 const exportedMethods = {
@@ -14,13 +17,25 @@ const exportedMethods = {
     });
   },
 
-  getUserById(id) {
+  async getUserById(id) {
     return users().then(usersCollection =>
       usersCollection.findOne({ _id: id }).then(user => {
         if (!user) throw new Error("User not found");
         return user;
       })
     );
+  },
+
+  async verifyPassword(id, plainPassword) {
+    const user = await this.getUserById(id);
+    let compareHash = null;
+    try {
+      compareHash = await bcrypt.compare(plainPassword, user.hashedPassword);
+    } catch (e) {
+      console.log(e);
+      throw new Error("Error");
+    }
+    return compareHash;
   },
 
   getUserByCredentials(username, password) {
@@ -32,16 +47,17 @@ const exportedMethods = {
     );
   },
 
-  addUser(username, password, emailAddress) {
+  async addUser(username, password, emailAddress) {
     if (!username || !password || !emailAddress) {
       throw new Error("You must supply all parts of the account");
     }
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     return users().then(usersCollection => {
       const newUser = {
         _id: uuidv1(),
         _sessionid: null,
         username,
-        password,
+        hashedPassword,
         emailAddress,
         emailAddress_verified: false
       };

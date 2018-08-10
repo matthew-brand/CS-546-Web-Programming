@@ -10,8 +10,10 @@
   "author": "Matthew Brand and Morgan Brenner",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
     "node-uuid": "^1.4.8",

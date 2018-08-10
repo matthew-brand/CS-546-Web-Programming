@@ -8,6 +8,7 @@ const staticViews = express.static(`${__dirname}/public`);
 
 app.use("/public", staticViews);
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 configRoutes(app);
 
 app.listen(3000, () => {
