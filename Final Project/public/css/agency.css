@@ -40,6 +40,22 @@ section h2.section-heading {
   margin-bottom: 15px;
 }
 
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 @media (min-width: 768px) {
   section {
     padding: 130px 0;
@@ -53,7 +69,8 @@ section h2.section-heading {
 
 .btn-xl {
   font-size: 18px;
-  padding: 20px 40px;
+  padding: 15px 40px;
+  margin-bottom: 20px
 }
 
 .btn-primary {
@@ -169,59 +186,64 @@ img {
   margin-right: auto;
 }
 
-section#contact {
+section#account {
   background-color: #212529;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-section#contact .section-heading {
+section#account .section-heading {
   color: #fff;
 }
 
-section#contact .form-group {
+section#account .form-group {
   margin-bottom: 25px;
 }
 
-section#contact .form-group input,
-section#contact .form-group textarea {
-  padding: 20px;
+section#account .form-group input,
+section#account .form-group textarea {
+  padding: 15px;
 }
 
-section#contact .form-group input.form-control {
+section#account .form-group input.form-control {
   height: auto;
 }
 
-section#contact .form-group textarea.form-control {
+section#account .form-group textarea.form-control {
   height: 248px;
 }
 
-section#contact .form-control:focus {
+section#account .form-control:focus {
   border-color: #fed136;
   box-shadow: none;
 }
 
-section#contact ::-webkit-input-placeholder {
+.form-control {
+  width: 50%;
+  margin: 0 auto;
+}
+
+section#account ::-webkit-input-placeholder {
   font-weight: 700;
   color: #ced4da;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-section#contact :-moz-placeholder {
+section#account :-moz-placeholder {
   font-weight: 700;
   color: #ced4da;
   /* Firefox 18- */
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-section#contact ::-moz-placeholder {
+section#account ::-moz-placeholder {
   font-weight: 700;
   color: #ced4da;
   /* Firefox 19+ */
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-section#contact :-ms-input-placeholder {
+section#account :-ms-input-placeholder {
   font-weight: 700;
   color: #ced4da;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;

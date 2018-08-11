@@ -43,8 +43,8 @@ const exportedMethods = {
     });
   },
 
-  addEvent(title, description, date, time, location, userId) {
-    if (!title || !description || !date || !time || !location || !userId) {
+  addEvent(title, description, date, time, location) {
+    if (!title || !description || !date || !time || !location) {
       throw new Error("You must supply all parts of the event");
     }
     return events().then(eventsCollection => {
@@ -61,7 +61,7 @@ const exportedMethods = {
       return eventsCollection
         .insertOne(newEvent)
         .then(newInsertInformation => newInsertInformation.insertedId)
-        .then(newId => this.getRecipeById(newId));
+        .then(newId => this.getEventById(newId));
     });
   },
 

@@ -65,7 +65,7 @@ const exportedMethods = {
       return usersCollection
         .insertOne(newUser)
         .then(newInsertInformation => newInsertInformation.insertedId)
-        .then(newId => this.getRecipeById(newId));
+        .then(newId => this.getUserById(newId));
     });
   },
 

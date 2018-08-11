@@ -45,7 +45,7 @@
             <a class="nav-link js-scroll-trigger" href="#calendar">Calendar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Login / Create Account</a>
+            <a class="nav-link js-scroll-trigger" id="nameDisplayHolder" href="#account">Login / Create Account</a>
           </li>
         </ul>
       </div>
@@ -60,37 +60,65 @@
   <!-- Calendar -->
   <section class="bg-light" id="calendar">
     <div class="container">
-
+      <table id="eventList">
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Location</th>
+      </table>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact">
+  <!-- Account -->
+  <section id="account">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Login</h2>
+          <h2 class="section-heading text-uppercase">Login Or Create An Account</h2>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <form id="contactForm" name="sentMessage" novalidate="novalidate">
+          <form id="loginForm" name="loginForm" novalidate="novalidate">
             <div class="row">
               <div class="col-lg-12">
                 <div class="form-group">
-                  <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name.">
+                  <input class="form-control" id="loginUsername" type="text" name="username" placeholder="Username" required="required" data-validation-required-message="Please enter your name.">
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address.">
+                  <input class="form-control" id="loginPassword" type="text" name="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="clearfix"></div>
               <div class="col-lg-12 text-center">
                 <div id="success"></div>
-                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Login</button>
-                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Create Account</button>
+                <button id="loginButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Login</button>
+              </div>
+            </div>
+          </form>
+
+          <form id="createAccountForm" name="createAccountForm" novalidate="novalidate">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <input class="form-control" id="CAusername" type="text" name="username" placeholder="Username" required="required" data-validation-required-message="Please enter your name.">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" id="CApassword" type="text" name="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" id="CAemail" type="email" name="emailAddress" placeholder="Email" required="required" data-validation-required-message="Please enter your email address.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-lg-12 text-center">
+                <div id="success"></div>
+                <button id="createAccountButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Create Account</button>
               </div>
             </div>
           </form>
@@ -117,9 +145,11 @@
   <!-- Plugin JavaScript -->
   <script src="/public/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Contact form JavaScript -->
-  <script src="/public/js/jqBootstrapValidation.js"></script>
-  <script src="/public/js/contact_me.js"></script>
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <!-- Login / Create Account form JavaScript -->
+  <script src="/public/js/accountForm.js"></script>
 
   <!-- Custom scripts for this template -->
   <script src="/public/js/agency.js"></script>
