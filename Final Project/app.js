@@ -1,9 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const exphbs = require("express-handlebars");
 
 const app = express();
 const configRoutes = require("./routes");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 const staticViews = express.static(`${__dirname}/public`);
 

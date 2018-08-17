@@ -1,34 +1,67 @@
+/* eslint-env browser */
+/* eslint-env jquery */
+
 const CAForm = document.getElementById("createAccountForm");
+const LIForm = document.getElementById("loginForm");
 
-//Handles submitting the "Create Account" Form
-CAForm.addEventListener('submit', function(event){
-    event.preventDefault(); //Stops the page from redirecting
-    const name = $("#CAusername")[0].value;
-    $.post( "/users", $( "#createAccountForm" ).serialize() ); // Posts the form to /users
-    $("#account").hide();   //Hides both forms
-    window.scrollTo(0, 0);  //Scrolls to the top of the page
-    $("#nameDisplayHolder")[0].innerHTML = "Hello " + name; //Renames the 'Login / Create Account' button to be a greeting
-});
+if ($("#loginButton").length) {
+  // Handles submitting the "Create Account" Form
+  CAForm.addEventListener("submit", event => {
+    $("#createAccountButton").html(
+      "<i class='fa fa-refresh fa-spin' style='font-size:24px'></i>"
+    );
+    event.preventDefault(); // Stops the page from redirecting
+    $.post(
+      "/createuser",
+      $("#createAccountForm").serialize(),
+      (data, status) => {
+        console.log(status);
+        console.log(JSON.stringify($("#createAccountForm").serialize()));
+        window.location = window.location.pathname + window.location.hash;
+      }
+    ).fail((err, status) => {
+      alert(status);
+      console.log(status);
+    });
+  });
 
-//Make a table out of the information stored in the events database
-//Later, we can make it more configurable, like show next 10, or show all on this date
-const eventData = $.getJSON("/events", function(result){
-    for (var i = 0; i < result.length; i++){
-        const row = document.createElement("tr");
-        const title = document.createElement("td")
-        const date = document.createElement("td")
-        const time = document.createElement("td")
-        const location = document.createElement("td")
+  // Handles submitting the "Login" Form
+  LIForm.addEventListener("submit", event => {
+    $("#loginButton").html(
+      "<i class='fa fa-refresh fa-spin' style='font-size:24px'></i>"
+    );
+    event.preventDefault(); // Stops the page from redirecting
+    $.post("/login", $("#loginForm").serialize(), (data, status) => {
+      console.log(status);
+      window.location = window.location.pathname + window.location.hash;
+    }).fail((err, status) => {
+      alert(status);
+      console.log(status);
+    });
+  });
+}
 
-        title.innerHTML = result[i].title;
-        date.innerHTML = result[i].date;
-        time.innerHTML = result[i].time;
-        location.innerHTML = result[i].location;
+// Make a table out of the information stored in the events database
+// Later, we can make it more configurable, like show next 10, or show all on this date
+$.getJSON("/events", result => {
+  console.log("TEST");
+  console.log(JSON.stringify(result));
+  for (let i = 0; i < result.length; i += 1) {
+    const row = document.createElement("tr");
+    const title = document.createElement("td");
+    const date = document.createElement("td");
+    const time = document.createElement("td");
+    const location = document.createElement("td");
 
-        document.getElementById("eventList").appendChild(row);
-        row.appendChild(title);
-        row.appendChild(date);
-        row.appendChild(time);
-        row.appendChild(location);
-    }
+    title.innerHTML = result[i].title;
+    date.innerHTML = result[i].date;
+    time.innerHTML = result[i].time;
+    location.innerHTML = result[i].location;
+
+    document.getElementById("eventList").appendChild(row);
+    row.appendChild(title);
+    row.appendChild(date);
+    row.appendChild(time);
+    row.appendChild(location);
+  }
 });

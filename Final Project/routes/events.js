@@ -1,8 +1,10 @@
 const express = require("express");
-// const uuidv1 = require("uuid/v1");
+// const uuidv4 = require('uuid/v4');
 
 const router = express.Router();
 const data = require("../data");
+
+const usersData = data.users;
 
 const eventsData = data.events;
 
@@ -29,6 +31,10 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log("Test");
+  const { sessionid } = req.cookies;
+  const user = await usersData.getUserBySessionID(sessionid);
+  const userID = user._id;
   if (
     !req.body.title ||
     !req.body.description ||
@@ -45,6 +51,7 @@ router.post("/", async (req, res) => {
     eventsData
       .addEvent(
         freshEvent.title,
+        userID,
         freshEvent.description,
         freshEvent.date,
         freshEvent.time,

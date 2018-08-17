@@ -1,28 +1,10 @@
 const express = require("express");
-// const uuidv1 = require("uuid/v1");
+// const uuidv4 = require('uuid/v4');
 
 const router = express.Router();
 const data = require("../data");
 
 const usersData = data.users;
-
-// Verifies correct password
-router.get("/:id/:password", async (req, res) => {
-  if (!req.params.id) {
-    res.status(400).json({ message: "You must supply id" });
-  } else if (!req.params.password) {
-    res.status(400).json({ message: "You must supply password" });
-  } else {
-    const { id } = req.params;
-    const { password } = req.params;
-    try {
-      const verified = await usersData.verifyPassword(id, password);
-      res.json(verified);
-    } catch (e) {
-      res.status(404).json({ message: e });
-    }
-  }
-});
 
 router.get("/", async (req, res) => {
   try {
@@ -71,6 +53,29 @@ router.post("/", async (req, res) => {
       .catch(e => {
         res.status(501).send(e);
       });
+  }
+});
+
+router.patch("/:id", async (req, res) => {
+  const updatedData = req.body;
+
+  if (!updatedData) {
+    res.status(400).json({ error: "You must provide data to update a user" });
+    return;
+  }
+
+  try {
+    await usersData.getUserById(req.params.id);
+  } catch (e) {
+    res.status(404).json({ error: "User not found" });
+  }
+
+  try {
+    await usersData.patchUser(req.params.id, updatedData);
+    const user = await usersData.getUserById(req.params.id);
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e });
   }
 });
 

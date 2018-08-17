@@ -1,4 +1,4 @@
-const uuidv1 = require("uuid/v1");
+const uuidv4 = require("uuid/v4");
 const mongoCollections = require("../config/mongoCollections");
 
 const { events } = mongoCollections;
@@ -43,14 +43,14 @@ const exportedMethods = {
     });
   },
 
-  addEvent(title, description, date, time, location) {
-    if (!title || !description || !date || !time || !location) {
+  addEvent(title, userID, description, date, time, location) {
+    if (!title || !userID || !description || !date || !time || !location) {
       throw new Error("You must supply all parts of the event");
     }
     return events().then(eventsCollection => {
       const newEvent = {
-        _id: uuidv1(),
-        userId,
+        _id: uuidv4(),
+        userID,
         title,
         description,
         date,
