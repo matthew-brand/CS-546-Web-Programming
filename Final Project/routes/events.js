@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("Test");
+  console.log("IS SOMETHIGN BEING POSTED??");
   const { sessionid } = req.cookies;
   const user = await usersData.getUserBySessionID(sessionid);
   const userID = user._id;

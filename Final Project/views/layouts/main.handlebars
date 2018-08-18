@@ -63,7 +63,33 @@
 
     <!-- map -->
     <section id="map">
-        <img src="../../public/img/stevensMap.jpg" alt="Stevens Map">
+        <img src="../../public/img/stevensMap.jpg" alt="Stevens Map" id="mainMap">
+    {{#if loggedIn}}
+        <form id="eventForm">
+            <fieldset>
+                <legend>Add An Event</legend>
+                Title:<br>
+                <input type="text" name="title">
+                <br>
+                Description:<br>
+                <input type="text" name="description">
+                <br>
+                Date:<br>
+                <input type="date" name="date">
+                <br>
+                Time:<br>
+                <input type="time" name="time">
+                <br>
+                Location:<br>
+                <input type="radio" name="location" value="Howe" checked> Howe<br>
+                <input type="radio" name="location" value="Babbio"> Babbio<br>
+                <input type="radio" name="location" value="Hayden Lounge"> Hayden Lounge<br>
+                <input type="radio" name="location" value="The Lawn"> The Lawn<br>
+                <br><br>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+        {{/if}}
     </section>
     {{#if loggedIn}}
     <!-- Calendar -->

@@ -55,6 +55,26 @@
   <!-- map -->
   <section id="map">
     <img src="/public/img/stevensMap.jpg" alt="Stevens Map">
+    <form>
+      <fieldset>
+        <legend>Add An Event</legend>
+        Title:<br>
+        <input type="text" name="title" value="title">
+        <br>
+        Description:<br>
+        <input type="text" name="description" value="description">
+        Date:<br>
+        <input type="datetime-local" name="date">
+        Time:<br>
+        <input type="time" name="time">
+        Location:<br>
+        <input type="radio" name="location" value="Howe" checked> Howe<br>
+        <input type="radio" name="location" value="Babbio"> Babbio<br>
+        <input type="radio" name="location" value="Hayden Lounge"> Hayden Lounge<br>
+        <input type="radio" name="location" value="The Lawn"> The Lawn<br>
+        <input type="submit" value="Submit">
+      </fieldset>
+    </form>
   </section>
 
   <!-- Calendar -->

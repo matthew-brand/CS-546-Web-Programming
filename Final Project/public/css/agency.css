@@ -186,6 +186,24 @@ img {
   margin-right: auto;
 }
 
+.editable{
+  transform: translatex(-15%);
+}
+
+section#map form{
+  display: inline;
+  float: right;
+  transform: translate(-45%, -110%);
+}
+
+fieldset{
+  display: inline;
+}
+
+section#calendar .container {
+  max-width: 1000px;
+}
+
 section#account {
   background-color: #212529;
   background-repeat: no-repeat;

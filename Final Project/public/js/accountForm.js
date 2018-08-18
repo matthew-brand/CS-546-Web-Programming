@@ -3,6 +3,7 @@
 
 const CAForm = document.getElementById("createAccountForm");
 const LIForm = document.getElementById("loginForm");
+const eventForm = document.getElementById("eventForm");
 
 if ($("#loginButton").length) {
   // Handles submitting the "Create Account" Form
@@ -35,6 +36,24 @@ if ($("#loginButton").length) {
       console.log(status);
       window.location = window.location.pathname + window.location.hash;
     }).fail((err, status) => {
+      alert(status);
+      console.log(status);
+    });
+  });
+} else {
+  document.getElementById("mainMap").classList.add("editable");
+
+  eventForm.addEventListener("submit", event => {
+    event.preventDefault(); // Stops the page from redirecting
+    $.post(
+      "/events",
+      $("#eventForm").serialize(),
+      (data, status) => {
+        console.log(status);
+        console.log(JSON.stringify($("eventForm").serialize()));
+        location.reload();
+      }
+    ).fail((err, status) => {
       alert(status);
       console.log(status);
     });
