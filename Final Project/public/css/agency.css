@@ -56,6 +56,34 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+.rectangle {
+  height: 30px;
+  width: 30px;
+  background-color: red;
+}
+
+.triangle-down {
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 20px solid red;
+    transform: translatex(5px)
+}
+
+p.notification {
+	color: white;
+    font-size: 20px;
+    margin: 0px;
+    transform: translate(30%, -5%);
+}
+
+.notification-box {
+  position: absolute;
+  float: left;
+  z-index: 2;
+}
+
 @media (min-width: 768px) {
   section {
     padding: 130px 0;
