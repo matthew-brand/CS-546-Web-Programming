@@ -45,6 +45,8 @@ const exportedMethods = {
   async getUserByID(id) {
     for (let index = 0; index < users.length; index += 1) {
       if (users[index]._id === id) {
+        console.log("FOUND USER");
+        console.log(`USER:${JSON.stringify(users[index])}`);
         return users[index];
       }
     }
@@ -56,7 +58,7 @@ const exportedMethods = {
         return users[index];
       }
     }
-    throw new Error("User not found");
+    return null;
   },
   async getUserIDBySessionID(sessionID) {
     let finalUserID = null;
@@ -72,7 +74,7 @@ const exportedMethods = {
     if (finalUserID != null) {
       return finalUserID;
     }
-    throw new Error("No ID Found");
+    return null;
   },
   async setSessionID(id) {
     exportedMethods.clearSessionID(id);
@@ -101,7 +103,7 @@ const exportedMethods = {
   async verifyLogin(username, password) {
     const user = await this.getUserByUsername(username);
     if (user == null) {
-      throw new Error("No user with that username");
+      return false;
     }
     let compareHash = null;
     try {

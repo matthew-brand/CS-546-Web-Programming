@@ -4,9 +4,23 @@ const data = require("../data");
 const usersData = data.users;
 
 const constructorMethod = app => {
-  let loggedInUsername = null;
+  let loggedInUserID = null;
+
+  app.use(async (req, res, next) => {
+    const { AuthCookie } = req.cookies;
+    const userID = await usersData.getUserIDBySessionID(AuthCookie);
+    if (userID !== null) {
+      loggedInUserID = userID;
+    } else {
+      loggedInUserID = null;
+    }
+    next();
+  });
 
   app.post("/login", async (req, res) => {
+    if (loggedInUserID != null) {
+      res.render("private");
+    }
     if (!req.body.username) {
       res.status(400).json({
         message: "You must supply a full account, you are missing the username"
@@ -30,11 +44,11 @@ const constructorMethod = app => {
             .cookie("AuthCookie", usersSessionID, {
               expire: 360000 + Date.now()
             })
-            .send(`Login successful, sessionid = ${usersSessionID}`);
+            .redirect("/private");
         } else {
           // Incorrect password
           console.log("Wrong password");
-          res.status(401).send("Wrong password");
+          res.render("loginincorrect");
         }
       } catch (e) {
         console.log(e);
@@ -43,37 +57,33 @@ const constructorMethod = app => {
     }
   });
 
-  app.use(async (req, res, next) => {
-    const { AuthCookie } = req.cookies;
-    const user = await usersData.getUserIDBySessionID(AuthCookie);
-    if (user !== null) {
-      loggedInUsername = user.username;
-    } else {
-      loggedInUsername = null;
-    }
-    next();
-  });
-
   app.get("/", (req, res) => {
-    if (loggedInUsername != null) {
+    if (loggedInUserID != null) {
       res.redirect("/private");
     } else {
-      res.sendFile(path.join(`${__dirname}/../login.html`));
+      res.render("login");
     }
   });
 
-  app.get("/private", (req, res) => {
-    if (loggedInUsername != null) {
-      res.sendFile(path.join(`${__dirname}/../private.html`));
+  app.get("/private", async (req, res) => {
+    if (loggedInUserID != null) {
+      const user = await usersData.getUserByID(loggedInUserID);
+      res.render("private", {
+        username: user.username,
+        first: user.firstName,
+        last: user.lastName,
+        profession: user.profession,
+        bio: user.bio
+      });
     } else {
-      res.redirect("/");
+      res.status(403).render("loginnotloggedin");
     }
   });
   app.get("/logout", async (req, res) => {
     const { AuthCookie } = req.cookies;
     const userID = await usersData.getUserIDBySessionID(AuthCookie);
     usersData.clearSessionID(userID);
-    res.clearCookie("AuthCookie").redirect("/");
+    res.clearCookie("AuthCookie").render("loginloggedout");
   });
 
   app.use("*", (req, res) => {
