@@ -7,10 +7,14 @@ const constructorMethod = app => {
   let loggedInUserID = null;
 
   app.use(async (req, res, next) => {
-    const { AuthCookie } = req.cookies;
-    const userID = await usersData.getUserIDBySessionID(AuthCookie);
-    if (userID !== null) {
-      loggedInUserID = userID;
+    if (req.cookies.AuthCookie) {
+      const { AuthCookie } = req.cookies;
+      const userID = await usersData.getUserIDBySessionID(AuthCookie);
+      if (userID !== null) {
+        loggedInUserID = userID;
+      } else {
+        loggedInUserID = null;
+      }
     } else {
       loggedInUserID = null;
     }

@@ -63,11 +63,13 @@ const exportedMethods = {
   async getUserIDBySessionID(sessionID) {
     let finalUserID = null;
     fs.readdirSync(`${__dirname}/../sessions/`).forEach(file => {
-      const jsonSessionID = JSON.parse(
-        fs.readFileSync(`${__dirname}/../sessions/${file}`, "utf8")
-      );
-      if (jsonSessionID.sessionID === sessionID) {
-        finalUserID = jsonSessionID.userID;
+      if (file !== ".DS_Store") {
+        const jsonSessionID = JSON.parse(
+          fs.readFileSync(`${__dirname}/../sessions/${file}`, "utf8")
+        );
+        if (jsonSessionID.sessionID === sessionID) {
+          finalUserID = jsonSessionID.userID;
+        }
       }
       return null;
     });
