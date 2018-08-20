@@ -65,7 +65,19 @@ if ($("#loginButton").length) {
 $.getJSON("/events", result => {
   console.log("TEST");
   console.log(JSON.stringify(result));
+  
+  var howeCount = 0;
+  var babbioCount = 0;
+  var lawnCount = 0;
+  var haydenCount = 0;
+
   for (let i = 0; i < result.length; i += 1) {
+    
+    if(result[i].location == "Howe"){howeCount++;}
+    else if(result[i].location == "Babbio"){babbioCount++;}
+    else if(result[i].location == "Hayden Lounge"){haydenCount++;}
+    else if(result[i].location == "The Lawn") {lawnCount++;}
+
     const row = document.createElement("tr");
     const title = document.createElement("td");
     const date = document.createElement("td");
@@ -83,4 +95,9 @@ $.getJSON("/events", result => {
     row.appendChild(time);
     row.appendChild(location);
   }
+
+  $("#howeMarker p")[0].innerHTML = howeCount;
+  $("#babbioMarker p")[0].innerHTML = babbioCount;
+  $("#lawnMarker p")[0].innerHTML = lawnCount;
+  $("#haydenMarker p")[0].innerHTML = haydenCount;
 });

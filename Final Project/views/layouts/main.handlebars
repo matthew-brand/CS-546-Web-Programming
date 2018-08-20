@@ -63,7 +63,35 @@
 
     <!-- map -->
     <section id="map">
+    <div>
+        {{#if loggedIn}}
+        <div class="notification-box" id="howeMarker" style="transform: translate(38vw, -3vh);">
+            <div class="rectangle">
+	            <p class="notification">0</p>
+            </div>
+            <div class="triangle-down"></div>
+        </div>
+        <div class="notification-box" id="lawnMarker" style="transform: translate(37vw, 16vh);">
+            <div class="rectangle">
+	            <p class="notification">0</p>
+            </div>
+            <div class="triangle-down"></div>
+        </div>
+        <div class="notification-box" id="babbioMarker" style="transform: translate(49vw, 31vh);">
+            <div class="rectangle">
+	            <p class="notification">0</p>
+            </div>
+            <div class="triangle-down"></div>
+        </div>
+        <div class="notification-box" id="haydenMarker" style="transform: translate(44vw, 18vh);">
+            <div class="rectangle">
+	            <p class="notification">0</p>
+            </div>
+            <div class="triangle-down"></div>
+        </div>
+        {{/if}}
         <img src="../../public/img/stevensMap.jpg" alt="Stevens Map" id="mainMap">
+    </div>
     {{#if loggedIn}}
         <form id="eventForm">
             <fieldset>
