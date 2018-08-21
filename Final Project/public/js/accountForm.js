@@ -52,7 +52,7 @@ if ($("#loginButton").length) {
     $.post("/events", $("#eventForm").serialize(), (data, status) => {
       console.log(status);
       console.log(JSON.stringify($("eventForm").serialize()));
-      location.reload();
+      window.location = window.location.pathname;
     }).fail((err, status) => {
       alert(status);
       console.log(status);
