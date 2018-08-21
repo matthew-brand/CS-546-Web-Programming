@@ -53,7 +53,8 @@ const exportedMethods = {
   async verifyPassword(username, plainPassword) {
     const user = await this.getUserByUsername(username);
     if (user == null) {
-      throw new Error("No user with that username");
+      // throw new Error("No user with that username");
+      return false;
     }
     let compareHash = null;
     try {

@@ -21,7 +21,8 @@ if ($("#loginButton").length) {
         window.location = window.location.pathname + window.location.hash;
       }
     ).fail((err, status) => {
-      alert(status);
+      alert("You must enter a username, password, and email. Try again.");
+      window.location = window.location.pathname;
       console.log(status);
     });
   });
@@ -32,11 +33,14 @@ if ($("#loginButton").length) {
       "<i class='fa fa-refresh fa-spin' style='font-size:24px'></i>"
     );
     event.preventDefault(); // Stops the page from redirecting
+    // console.log(JSON.stringify($("#loginForm").serialize()));
     $.post("/login", $("#loginForm").serialize(), (data, status) => {
       console.log(status);
+      // console.log(data);
       window.location = window.location.pathname + window.location.hash;
     }).fail((err, status) => {
-      alert(status);
+      alert("You have entered an incorrect username/password. Try again.");
+      window.location = window.location.pathname;
       console.log(status);
     });
   });
@@ -45,15 +49,11 @@ if ($("#loginButton").length) {
 
   eventForm.addEventListener("submit", event => {
     event.preventDefault(); // Stops the page from redirecting
-    $.post(
-      "/events",
-      $("#eventForm").serialize(),
-      (data, status) => {
-        console.log(status);
-        console.log(JSON.stringify($("eventForm").serialize()));
-        location.reload();
-      }
-    ).fail((err, status) => {
+    $.post("/events", $("#eventForm").serialize(), (data, status) => {
+      console.log(status);
+      console.log(JSON.stringify($("eventForm").serialize()));
+      location.reload();
+    }).fail((err, status) => {
       alert(status);
       console.log(status);
     });
@@ -65,18 +65,22 @@ if ($("#loginButton").length) {
 $.getJSON("/events", result => {
   console.log("TEST");
   console.log(JSON.stringify(result));
-  
-  var howeCount = 0;
-  var babbioCount = 0;
-  var lawnCount = 0;
-  var haydenCount = 0;
+
+  let howeCount = 0;
+  let babbioCount = 0;
+  let lawnCount = 0;
+  let haydenCount = 0;
 
   for (let i = 0; i < result.length; i += 1) {
-    
-    if(result[i].location == "Howe"){howeCount++;}
-    else if(result[i].location == "Babbio"){babbioCount++;}
-    else if(result[i].location == "Hayden Lounge"){haydenCount++;}
-    else if(result[i].location == "The Lawn") {lawnCount++;}
+    if (result[i].location === "Howe") {
+      howeCount += howeCount;
+    } else if (result[i].location === "Babbio") {
+      babbioCount += babbioCount;
+    } else if (result[i].location === "Hayden Lounge") {
+      haydenCount += haydenCount;
+    } else if (result[i].location === "The Lawn") {
+      lawnCount += lawnCount;
+    }
 
     const row = document.createElement("tr");
     const title = document.createElement("td");
