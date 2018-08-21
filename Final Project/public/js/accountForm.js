@@ -73,13 +73,13 @@ $.getJSON("/events", result => {
 
   for (let i = 0; i < result.length; i += 1) {
     if (result[i].location === "Howe") {
-      howeCount += howeCount;
+      howeCount++;
     } else if (result[i].location === "Babbio") {
-      babbioCount += babbioCount;
+      babbioCount++;
     } else if (result[i].location === "Hayden Lounge") {
-      haydenCount += haydenCount;
+      haydenCount++;
     } else if (result[i].location === "The Lawn") {
-      lawnCount += lawnCount;
+      lawnCount++;
     }
 
     const row = document.createElement("tr");
