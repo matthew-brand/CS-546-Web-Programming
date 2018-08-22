@@ -3,6 +3,12 @@ const mongoCollections = require("../config/mongoCollections");
 
 const { events } = mongoCollections;
 
+function checkIsProperString(val, variableName) {
+  if (typeof val !== "string") {
+    throw new Error(`${variableName} is not a string`);
+  }
+}
+
 const exportedMethods = {
   getAllEvents() {
     return events().then(eventsCollection => {
@@ -15,6 +21,11 @@ const exportedMethods = {
   },
 
   getEventById(id) {
+    if (id === undefined || !id) {
+      throw new Error("The id argument was not provided to removeUser");
+    }
+    checkIsProperString(id, "id");
+
     return events().then(eventsCollection =>
       eventsCollection.findOne({ _id: id }).then(event => {
         if (!event) throw new Error("Event not found");
@@ -24,6 +35,11 @@ const exportedMethods = {
   },
 
   getEventsByDate(date) {
+    if (date === undefined || !date) {
+      throw new Error("The date argument was not provided to getEventsByDate");
+    }
+    checkIsProperString(date, "date");
+
     return events().then(eventsCollection => {
       try {
         return eventsCollection.find({ date }).toArray();
@@ -34,6 +50,13 @@ const exportedMethods = {
   },
 
   getEventsByLocation(location) {
+    if (location === undefined || !location) {
+      throw new Error(
+        "The location argument was not provided to getEventsByLocation"
+      );
+    }
+    checkIsProperString(location, "location");
+
     return events().then(eventsCollection => {
       try {
         return eventsCollection.find({ location }).toArray();
@@ -44,9 +67,31 @@ const exportedMethods = {
   },
 
   addEvent(title, userID, description, date, time, location) {
-    if (!title || !userID || !description || !date || !time || !location) {
-      throw new Error("You must supply all parts of the event");
+    if (title === undefined || !title) {
+      throw new Error("The id argument was not provided to addEvent");
     }
+    if (userID === undefined || !userID) {
+      throw new Error("The userID argument was not provided to addEvent");
+    }
+    if (description === undefined || !description) {
+      throw new Error("The description argument was not provided to addEvent");
+    }
+    if (date === undefined || !date) {
+      throw new Error("The date argument was not provided to addEvent");
+    }
+    if (time === undefined || !time) {
+      throw new Error("The time argument was not provided to addEvent");
+    }
+    if (location === undefined || !location) {
+      throw new Error("The location argument was not provided to addEvent");
+    }
+    checkIsProperString(title, "title");
+    checkIsProperString(userID, "userID");
+    checkIsProperString(description, "description");
+    checkIsProperString(date, "date");
+    checkIsProperString(time, "time");
+    checkIsProperString(location, "location");
+
     return events().then(eventsCollection => {
       const newEvent = {
         _id: uuidv4(),
@@ -66,9 +111,11 @@ const exportedMethods = {
   },
 
   removeEvent(id) {
-    if (!id) {
-      throw new Error("You must supply an ID");
+    if (id === undefined || !id) {
+      throw new Error("The id argument was not provided to removeEvent");
     }
+    checkIsProperString(id, "id");
+
     return events().then(eventsCollection =>
       eventsCollection.removeOne({ _id: id }).then(deletionInfo => {
         if (deletionInfo.deletedCount === 0) {

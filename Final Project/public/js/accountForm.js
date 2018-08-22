@@ -39,7 +39,9 @@ if ($("#loginButton").length) {
       // console.log(data);
       window.location = window.location.pathname + window.location.hash;
     }).fail((err, status) => {
-      alert("You have entered an incorrect username/password. Try again.");
+      alert(
+        "You have entered an incorrect username/password. Please make sure your account has a Stevens email. Try again."
+      );
       window.location = window.location.pathname;
       console.log(status);
     });
@@ -73,13 +75,13 @@ $.getJSON("/events", result => {
 
   for (let i = 0; i < result.length; i += 1) {
     if (result[i].location === "Howe") {
-      howeCount++;
+      howeCount += 1;
     } else if (result[i].location === "Babbio") {
-      babbioCount++;
+      babbioCount += 1;
     } else if (result[i].location === "Hayden Lounge") {
-      haydenCount++;
+      haydenCount += 1;
     } else if (result[i].location === "The Lawn") {
-      lawnCount++;
+      lawnCount += 1;
     }
 
     const row = document.createElement("tr");

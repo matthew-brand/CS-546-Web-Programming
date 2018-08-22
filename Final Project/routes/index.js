@@ -12,10 +12,18 @@ const constructorMethod = app => {
   let loggedInUsername = null;
 
   app.use(async (req, res, next) => {
-    const { sessionid } = req.cookies;
-    const user = await usersData.getUserBySessionID(sessionid);
-    if (user !== null) {
-      loggedInUsername = user.username;
+    if (req.cookies) {
+      const { sessionid } = req.cookies;
+      if (sessionid !== undefined && sessionid !== null && sessionid !== "") {
+        const user = await usersData.getUserBySessionID(sessionid);
+        if (user !== null) {
+          loggedInUsername = user.username;
+        } else {
+          loggedInUsername = null;
+        }
+      } else {
+        loggedInUsername = null;
+      }
     } else {
       loggedInUsername = null;
     }
