@@ -62,4 +62,6 @@ typings/
 
 # next.js build output
 .next
+
+**/Certs
 >>>>>>> 8a1602d9bfb90c2f9d788a2bc9b139847150445c
